@@ -1,0 +1,104 @@
+.heroes-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 62px;
+}
+
+.hero-card {
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+  margin: 10px;
+  width: 23%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 1000px) {
+    width: 46%;
+  }
+  @media (max-width: 768px) {
+    margin: 10px 0;
+    width: 100%;
+  }
+  &__name {
+    padding: 10px;
+  }
+  &__image {
+    width: 100%;
+    height: 250px;
+    &--detail {
+      height: 300px;
+      @media (max-width: 400px) {
+        height: 200px;
+      }
+    }
+  }
+  &__description {
+    padding: 10px 10px 0 10px;
+    line-height: 18px;
+    overflow: hidden;
+    height: 38px;
+    &--detail {
+      height: auto;
+      padding-bottom: 10px;
+      overflow: visible;
+    }
+  }
+  &__btn {
+    padding: 10px;
+    text-decoration: none;
+  }
+  &__mention {
+    display: flex;
+    padding: 10px 10px 20px 10px;
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+  &__stories, &__comics, &__series, &__events {
+    &:not(:last-child) {
+      margin-right: 10px
+    }
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+    display: block;
+    padding: 10px;
+    text-align: center;
+    background-color: #F5F5F5;
+    border-radius: 10%;
+  }
+  &--detail {
+    height: max-content;
+    margin: 10px 1% 0 0;
+    width: 49%;
+    @media (max-width: 768px) {
+      margin-right: 0;
+      width: 100%;
+    }
+  }
+}
+
+.hero-details {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.hero-search {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  background-color: #3f51b5;
+  top: 0;
+  left: auto;
+  right: 0;
+  position: fixed;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+
+  &__search-input {
+    display: block;
+    outline: none;
+    width: 200px;
+    font-size: 16px;
+  }
+}
