@@ -10,11 +10,11 @@ class InfiniteScroll extends Component {
     if (!heroes.length && fetchHeroes) {
       fetchHeroes()
     }
-    window.addEventListener('scroll', _.debounce(this.handleScroll, 500), false)
+    window.addEventListener('scroll', _.debounce(this.handleScroll, 500))
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', _.debounce(this.handleScroll, 500), false)
+    window.removeEventListener('scroll', _.debounce(this.handleScroll, 500))
   }
 
   handleScroll = () => {

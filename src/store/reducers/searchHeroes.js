@@ -17,7 +17,6 @@ const initialState = {
 const searchHeroes = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.START_SEARCH_HERO:
-      console.log('START_SEARCH_HERO')
       return {
         ...state,
         searchingHero: [],

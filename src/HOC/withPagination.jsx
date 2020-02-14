@@ -15,7 +15,6 @@ function withPagination(WrappedComponent) {
       const { total, limit,  id, fetchPrevData, fetchNextData, fetchCurrentPageData } = this.props
       const { currentPage } = this.state
       const isNeedingPagination = Math.ceil(total / limit) > 1
-      console.log(this.state.currentPage)
       const data = {
         ..._.omit(this.props, ['data', 'isLoading', 'isFailure'])
       }
