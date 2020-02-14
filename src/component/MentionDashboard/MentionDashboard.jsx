@@ -1,15 +1,33 @@
 import React, { Component, Fragment } from 'react'
+import _ from 'lodash'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import StoriesList from './StoriesList'
-import EventsList from './EventsList'
-import ComicsList from './ComicsList'
-import SeriesList from './SeriesList'
+import MentionList from './MentionList'
 import Loader from '../Loader'
-import { fetchEventsByHeroId } from '../../store/actions/mention/events'
-import { fetchComicsByHeroId } from '../../store/actions/mention/comics'
-import { fetchStoriesByHeroId } from '../../store/actions/mention/stories'
-import { fetchSeriesByHeroId } from '../../store/actions/mention/series'
+import {
+  fetchEventsByHeroId,
+  fetchEventsOnCurrentPage,
+  fetchNextEventsByHeroId,
+  fetchPrevEventsByHeroId
+} from '../../store/actions/mention/events'
+import {
+  fetchComicsByHeroId,
+  fetchComicsOnCurrentPage,
+  fetchNextComicsByHeroId,
+  fetchPrevComicsByHeroId
+} from '../../store/actions/mention/comics'
+import {
+  fetchNextStoriesByHeroId,
+  fetchPrevStoriesByHeroId,
+  fetchStoriesByHeroId,
+  fetchStoriesOnCurrentPage
+} from '../../store/actions/mention/stories'
+import {
+  fetchNextSeriesByHeroId,
+  fetchPrevSeriesByHeroId,
+  fetchSeriesByHeroId,
+  fetchSeriesOnCurrentPage
+} from '../../store/actions/mention/series'
 
 
 const TABS = {
@@ -81,7 +99,25 @@ class MentionDashboard extends Component {
   }
 
   render() {
-    const { stories, events, comics, series, id } = this.props
+    const {
+      id,
+      stories,
+      events,
+      comics,
+      series,
+      fetchPrevComics,
+      fetchNextComics,
+      fetchCurrentPageComics,
+      fetchPrevEvents,
+      fetchNextEvents,
+      fetchCurrentPageEvents,
+      fetchPrevSeries,
+      fetchNextSeries,
+      fetchCurrentPageSeries,
+      fetchPrevStories,
+      fetchNextStories,
+      fetchCurrentPageStories,
+    } = this.props
     const { isLoading: isLoadingStories, count: countStories } = stories
     const { isLoading: isLoadingEvents, count: countEvents } = events
     const { isLoading: isLoadingComics, count: countComics} = comics
@@ -121,10 +157,49 @@ class MentionDashboard extends Component {
               }
             </div>
             <div className="mention-dashboard__content">
-              {activeTab === TABS.STORIES && <StoriesList id={id} {...stories} />}
-              {activeTab === TABS.SERIES && <SeriesList id={id} {...series} />}
-              {activeTab === TABS.COMICS && <ComicsList id={id} {...comics} />}
-              {activeTab === TABS.EVENTS && <EventsList id={id} {...events} />}
+              {activeTab === TABS.STORIES &&
+                <MentionList
+                  className="stories-list"
+                  id={id}
+                  data={stories.data}
+                  fetchPrevData={fetchPrevStories}
+                  fetchNextData={fetchNextStories}
+                  fetchCurrentPageData={fetchCurrentPageStories}
+                  {..._.omit(stories, ['data'])} />
+              }
+              {activeTab === TABS.SERIES &&
+                <MentionList
+                  className="series-list"
+                  id={id}
+                  data={series.data}
+                  fetchPrevData={fetchPrevSeries}
+                  fetchNextData={fetchNextSeries}
+                  fetchCurrentPageData={fetchCurrentPageSeries}
+                  {..._.omit(series, ['data'])}
+                />
+              }
+              {activeTab === TABS.COMICS &&
+                <MentionList
+                  className="comics-list"
+                  id={id}
+                  data={comics.data}
+                  fetchPrevData={fetchPrevComics}
+                  fetchNextData={fetchNextComics}
+                  fetchCurrentPageData={fetchCurrentPageComics}
+                  {..._.omit(comics, ['data'])}
+                />
+              }
+              {activeTab === TABS.EVENTS &&
+                <MentionList
+                  className="events-list"
+                  id={id}
+                  data={events.data}
+                  fetchPrevData={fetchPrevEvents}
+                  fetchNextData={fetchNextEvents}
+                  fetchCurrentPageData={fetchCurrentPageEvents}
+                  {..._.omit(events, ['data'])}
+                />
+              }
             </div>
           </Fragment>
         }
@@ -140,6 +215,18 @@ const mapDispatchToProps = (dispatch) => ({
   fetchEventsByHeroId: (id) => dispatch(fetchEventsByHeroId(id)),
   fetchSeriesByHeroId: (id) => dispatch(fetchSeriesByHeroId(id)),
   fetchComicsByHeroId: (id) => dispatch(fetchComicsByHeroId(id)),
+  fetchPrevComics: (data, id) => dispatch(fetchPrevComicsByHeroId(data, id)),
+  fetchNextComics: (data, id) => dispatch(fetchNextComicsByHeroId(data, id)),
+  fetchCurrentPageComics: (data, id) => dispatch(fetchComicsOnCurrentPage(data, id)),
+  fetchPrevEvents: (data, id) => dispatch(fetchPrevEventsByHeroId(data, id)),
+  fetchNextEvents: (data, id) => dispatch(fetchNextEventsByHeroId(data, id)),
+  fetchCurrentPageEvents: (data, id) => dispatch(fetchEventsOnCurrentPage(data, id)),
+  fetchPrevSeries: (data, id) => dispatch(fetchPrevSeriesByHeroId(data, id)),
+  fetchNextSeries: (data, id) => dispatch(fetchNextSeriesByHeroId(data, id)),
+  fetchCurrentPageSeries: (data, id) => dispatch(fetchSeriesOnCurrentPage(data, id)),
+  fetchNextStories: (data, id) => dispatch(fetchNextStoriesByHeroId(data, id)),
+  fetchPrevStories: (data, id) => dispatch(fetchPrevStoriesByHeroId(data, id)),
+  fetchCurrentPageStories: (data, id) => dispatch(fetchStoriesOnCurrentPage(data, id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MentionDashboard)
